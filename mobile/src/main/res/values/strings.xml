@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Golf Marin</string>
+    <string name="title_course_list">Golf Course List</string>
+    <string name="title_county_detail">County Detail</string>
+    <string name="title_course_detail">Golf Course Detail</string>
+    <string name="county">County Icon</string>
+    
+    <string name="title_county_list">Golf Near San Francisco</string>
+    <string name="county_list">County</string>
+    <string name="course_list">Golf Course</string>
+    <string name="detail">Details</string>
+    <string name="hole_legend">Hole</string>
+    <string name="hole_minus">-</string>
+    <string name="hole_num">1</string>
+    <string name="hole_plus">+</string>
+    <string name="hole_back">Back</string>
+    <string name="hole_middle">Middle</string>
+    <string name="hole_front">Front</string>
+    <string name="title_hole_detail">Hole Detail</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="reply_label">Reply</string>string>
+
+</resources>

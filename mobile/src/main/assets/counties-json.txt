@@ -1,0 +1,71 @@
+{ "counties": {
+    "county": [
+        {
+            "name": "Marin",
+            "id": "1",
+            "countyInfo": "Hot tub central",
+            "latitude": "38.010",
+            "longitude": "-122.613",
+            "thumbnailURL": "marin",
+            "woeid": "2488201"
+        },
+        {
+            "name": "Napa",
+            "id": "5",
+            "countyInfo": "Hot air",
+            "latitude": "38.404",
+            "longitude": "-122.412",
+            "thumbnailURL": "napa",
+            "woeid": "2456984"
+        },
+                {
+            "name": "Sonoma",
+            "id": "3",
+            "countyInfo": "Wine country",
+            "latitude": "38.302",
+            "longitude": "-122.629",
+            "thumbnailURL": "sonoma",
+            "woeid": "2488916"
+        },
+        {
+            "name": "San Francisco",
+            "id": "2",
+            "countyInfo": "Poet central",
+            "latitude": "37.760",
+            "longitude": "-122.447",
+            "thumbnailURL": "sanfrancisco",
+            "woeid": "2487956"
+        },
+        {
+            "name": "San Mateo",
+            "id": "4",
+            "countyInfo": "South central",
+            "latitude": "37.534",
+            "longitude": "-122.393",
+            "thumbnailURL": "sanmateo",
+            "woeid": "2488142"
+
+        },
+        {
+            "name": "Contra Costa",
+            "id": "6",
+            "countyInfo": "Diablo",
+            "latitude": "37.988857",
+            "longitude": "-122.053642",
+            "thumbnailURL": "sanmateo",
+            "woeid": "2384020"
+            
+        },
+        {
+            "name": "Solano",
+            "id": "7",
+            "countyInfo": "Sem-Yeto",
+            "latitude": "38.112139",
+            "longitude": "-122.225704",
+            "thumbnailURL": "sanmateo",
+            "woeid": "2510744"
+            
+        }
+    ]
+    }
+}

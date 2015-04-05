@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.golfmarin.golf"
+    android:versionCode="2"
+    android:versionName="2.1" >
+    
+    <permission
+          android:name="com.golfmarin.golf.permission.MAPS_RECEIVE"
+          android:protectionLevel="signature"/>
+    <uses-permission android:name="com.golfmarin.golf.permission.MAPS_RECEIVE"/>      
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+	<uses-permission android:name="android.permission.CALL_PHONE"/>
+	
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+	
+	<uses-feature
+  		android:glEsVersion="0x00020000"
+  		android:required="true"/>
+	<uses-feature 
+	    android:name="android.hardware.telephony"
+	    android:required="false"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/golf_marin"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        
+        <uses-library android:name="com.google.android.maps"/>
+        
+        <activity
+            android:name="com.golfmarin.golf.CountyListActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.golfmarin.golf.CourseListActivity"
+            android:label="@string/title_course_list"
+            android:parentActivityName=".CountyListActivity"
+            >           
+        </activity>
+        <activity
+            android:name="com.golfmarin.golf.CountyDetailActivity"
+            android:label="@string/title_county_detail"
+            android:parentActivityName=".CountyListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CountyListActivity" />
+        </activity>
+        <activity
+            android:name="com.golfmarin.golf.CourseDetailActivity"
+            android:label="@string/title_course_detail"
+            android:parentActivityName=".CourseListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CourseListActivity" />
+        </activity>
+        <activity
+            android:name="com.golfmarin.golf.HoleActivity"
+            android:label="@string/title_hole_detail"
+            android:parentActivityName=".HoleActivity" 
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HoleActivity" />
+        </activity>
+
+        <service android:name=".DataLayerListener">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+        </service>
+
+
+
+        <meta-data
+    		android:name="com.google.android.maps.v2.API_KEY"
+    		android:value="AIzaSyBHSnbR1zhlzE5iHKO1gvwQKsvbTo2_nj8"/>
+        
+        <uses-library android:required="false" android:name="com.sec.android.app.multiwindow"> </uses-library>
+        <meta-data android:name="com.sec.android.support.multiwindow" android:value="true" />
+        
+        <meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W" android:resource="@dimen/app_defaultsize_w" />
+		<meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H" android:resource="@dimen/app_defaultsize_h" />
+		<meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W" android:resource="@dimen/app_minimumsize_w" />
+		<meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H" android:resource="@dimen/app_minimumsize_h" />
+
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        
+    </application>
+    
+
+
+</manifest>

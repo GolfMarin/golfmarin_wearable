@@ -1,0 +1,130 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:paddingBottom="8dp" >
+
+	    <TableRow
+	        android:id="@+id/tableRow1"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:gravity="center_horizontal" >
+
+	        <TextView
+	            xmlns:android="http://schemas.android.com/apk/res/android"
+	            xmlns:tools="http://schemas.android.com/tools"
+	            android:id="@+id/course_name"
+	            style="?android:attr/textAppearanceMedium"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_horizontal"
+	            android:gravity="center_horizontal"
+	            android:textAlignment="center"
+	            android:textColor="#177245"
+	            android:textStyle="normal"
+	            android:typeface="normal"
+	            tools:context=".CourseDetailFragment" />
+
+	    </TableRow>
+
+	    <TableRow
+	        android:id="@+id/tableRow2"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:gravity="center_horizontal" >
+
+	        <TextView
+	            xmlns:android="http://schemas.android.com/apk/res/android"
+	            xmlns:tools="http://schemas.android.com/tools"
+	            android:id="@+id/course_address"
+	            style="?android:attr/textAppearanceMedium"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_horizontal"
+	            android:gravity="center_horizontal"
+	            android:textAlignment="gravity"
+	            android:textColor="#177245"
+	            android:textStyle="normal"
+	            android:typeface="normal"
+	            tools:context=".CourseDetailFragment" />
+
+	    </TableRow>
+
+	    <TableRow
+	        android:id="@+id/tableRow3"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:gravity="center_horizontal" >
+
+	        <TextView
+	            xmlns:android="http://schemas.android.com/apk/res/android"
+	            xmlns:tools="http://schemas.android.com/tools"
+	            android:id="@+id/course_city"
+	            style="?android:attr/textAppearanceMedium"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_horizontal"
+	            android:gravity="center_horizontal"
+	            android:textAlignment="gravity"
+	            android:textColor="#177245"
+	            android:textStyle="normal"
+	            android:typeface="normal"
+	            tools:context=".CourseDetailFragment" />
+
+	    </TableRow>
+	    
+	       <TableRow
+	           android:id="@+id/tableRow4"
+	           android:layout_width="match_parent"
+	           android:layout_height="wrap_content"
+	           android:layout_gravity="center_horizontal"
+	           android:gravity="center_horizontal" >
+
+	        <TextView 
+	            xmlns:android="http://schemas.android.com/apk/res/android" 
+	            xmlns:tools="http://schemas.android.com/tools" 
+	            android:id="@+id/course_description" 
+	            style="?android:attr/textAppearanceMedium" 
+	            android:textColor="#177245"
+	            android:layout_width="fill_parent" 
+	            android:layout_height="wrap_content" 
+	            android:gravity="center_horizontal" 
+	            android:textAlignment="gravity" 
+	            android:textStyle="normal" 
+	            android:typeface="normal" 
+	            tools:context=".CourseDetailFragment" />
+
+	    </TableRow>
+
+	    <TableRow
+	        android:id="@+id/tableRow5"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:gravity="center_horizontal" >
+	        
+	    <TextView
+	        xmlns:android="http://schemas.android.com/apk/res/android"
+	        xmlns:tools="http://schemas.android.com/tools"
+	        android:id="@+id/course_phone"
+	        style="?android:attr/textAppearanceMedium"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:clickable="true"
+	        android:textColor="#0000FF"
+	        android:textColorLink="#0000FF"
+	        android:gravity="center_horizontal"
+	        android:textAlignment="gravity"
+	        android:textStyle="normal"
+	        android:typeface="normal"
+	        tools:context=".CourseDetailFragment" />
+
+	    </TableRow>
+	</TableLayout>
+	
+

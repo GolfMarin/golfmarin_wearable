@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp"
+    android:divider="?android:attr/dividerVertical"
+    android:orientation="vertical"
+    android:showDividers="middle"
+    android:textAlignment="center"
+    tools:context=".CountyDetailActivity" >
+
+ <FrameLayout
+
+
+     android:id="@+id/detail_container"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_weight="1"
+     tools:context=".CountyDetailActivity"
+     tools:ignore="MergeRootFrame" />
+
+<fragment
+
+    android:id="@+id/map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    class="com.google.android.gms.maps.SupportMapFragment" />
+
+</LinearLayout>

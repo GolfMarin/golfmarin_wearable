@@ -23,7 +23,9 @@
             android:text="@string/hole"
             android:textSize="40dp"
             android:gravity="center_horizontal"
-            android:textColor="#ffffffff" />
+            android:textColor="#ffffffff"
+            android:textStyle="bold"
+            android:paddingTop="5dp" />
 
         <TextView
             android:id="@+id/back"
@@ -33,7 +35,8 @@
             android:text="@string/back"
             android:textSize="40dp"
             android:gravity="center_horizontal"
-            android:textColor="#ffffffff" />
+            android:textColor="#ffffffff"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/middle"
@@ -43,7 +46,8 @@
             android:text="@string/middle"
             android:textSize="40dp"
             android:gravity="center_horizontal"
-            android:textColor="#ffffffff" />
+            android:textColor="#ffffffff"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/front"
@@ -53,7 +57,8 @@
             android:text="@string/front"
             android:textSize="40dp"
             android:gravity="center_horizontal"
-            android:textColor="#ffffffff" />
+            android:textColor="#ffffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -55,14 +55,6 @@
             >           
         </activity>
         <activity
-            android:name="com.golfmarin.golf.CountyDetailActivity"
-            android:label="@string/title_county_detail"
-            android:parentActivityName=".CountyListActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CountyListActivity" />
-        </activity>
-        <activity
             android:name="com.golfmarin.golf.CourseDetailActivity"
             android:label="@string/title_course_detail"
             android:parentActivityName=".CourseListActivity" >

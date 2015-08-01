@@ -19,9 +19,9 @@ import android.os.StrictMode;
 
 /**
  * An activity representing a list of Counties. This activity has different
- * presentations for handset and tablet-size devices. On handsets, the activity
+ * presentations for handset and tablet-size devices. On handheldss, the activity
  * presents a list of items, which when touched, lead to a
- * {@link CountyDetailActivity} representing item details. On tablets, the
+ * {@link CountyDetailFragment} representing item details. On tablets, the
  * activity presents the list of items and item details side-by-side using two
  * vertical panes.
  * <p>

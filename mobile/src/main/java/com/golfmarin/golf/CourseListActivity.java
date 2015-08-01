@@ -9,8 +9,10 @@ import android.support.v4.app.NavUtils;
 import android.os.StrictMode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 //import android.util.Log;
+import android.util.Log;
 import android.view.MenuItem;
 
 
@@ -44,8 +46,11 @@ public class CourseListActivity extends FragmentActivity implements CourseListFr
         	if (course.county.equalsIgnoreCase(selectedCounty.name)) {
 	           filteredCourses.add(course);		        	
         	}
-        	i++; 
+        	i++;
         }
+
+		// Order the courses list
+		Collections.sort(filteredCourses);
 
         // Then replace the course list fragment with one containing courses for the selected county
 		FragmentManager fm = getSupportFragmentManager();
@@ -64,8 +69,6 @@ public class CourseListActivity extends FragmentActivity implements CourseListFr
     	else {
     		//Log.v("myApp", "Course List Activity: Use existing course List Fragment " + gcf);
     	}
-      
-		
 	}
 	
 public void onCourseSelected(Course c) {

@@ -7,7 +7,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-public class Course implements Parcelable{
+public class Course implements Parcelable, Comparable<Course> {
 	
 	String	name = "None";
 	String	address = "None";
@@ -92,7 +92,11 @@ public class Course implements Parcelable{
         in.readTypedList(holeList, Hole.CREATOR);
         
 //        Log.v("myApp", "Course " + name + ", holeList: " + holeList);
-        
     }
 
+    // This makes Course objects comparable, so a course list can easily be sorted as a Collection
+    public int compareTo(Course c) {
+        Course compareToCourse = c;
+        return this.name.compareTo(compareToCourse.name);
+    }
 }

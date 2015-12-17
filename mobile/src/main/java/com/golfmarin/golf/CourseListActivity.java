@@ -18,11 +18,18 @@ import android.view.MenuItem;
 
 public class CourseListActivity extends FragmentActivity implements CourseListFragment.Callbacks {
 	
-	County selectedCounty = null;
-	ArrayList<Course> allCourses = null;
+	Region selectedRegion = null;
+	ArrayList<Course> filteredCourses = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+				.detectDiskReads()
+				.detectDiskWrites()
+				.detectNetwork()
+				.penaltyLog()
+				.build());
+
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_course_list);
@@ -31,12 +38,12 @@ public class CourseListActivity extends FragmentActivity implements CourseListFr
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		// Get the intent info
-		selectedCounty = getIntent().getParcelableExtra("county");
-		allCourses = getIntent().getParcelableArrayListExtra("courses");
+		selectedRegion = getIntent().getParcelableExtra("region");
+		filteredCourses = getIntent().getParcelableArrayListExtra("courses");
 		
 		
 		// Add a course list fragment for the selected county
-		
+/*
 		// Start by making a list of courses in the selected county
 		ArrayList<Course> filteredCourses = new ArrayList<Course>();
 		Course course;
@@ -48,7 +55,7 @@ public class CourseListActivity extends FragmentActivity implements CourseListFr
         	}
         	i++;
         }
-
+*/
 		// Order the courses list
 		Collections.sort(filteredCourses);
 
@@ -73,11 +80,11 @@ public class CourseListActivity extends FragmentActivity implements CourseListFr
 	
 public void onCourseSelected(Course c) {
 
-			// Start the detail activity for the selected course.
+		// Start the detail activity for the selected course.
 			Intent detailIntent = new Intent(this, CourseDetailActivity.class);
-			detailIntent.putExtra("county", selectedCounty);
+			detailIntent.putExtra("region", selectedRegion);
 			detailIntent.putExtra("course", c);
-            detailIntent.putExtra("courses", allCourses);
+//            detailIntent.putExtra("courses", filteredCourses);
 			startActivity(detailIntent);
 		}
 	

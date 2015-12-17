@@ -37,7 +37,7 @@ public class CourseDetailActivity extends FragmentActivity implements
 
     GoogleApiClient googleClient;
 	
-	Course displayedCourse = null;
+	Course selectedCourse = null;
 
     // Check screen size onStart
     // Create a google API client for starting the wearable app
@@ -68,7 +68,7 @@ public class CourseDetailActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		
 		final Context ctx = this;
-		displayedCourse = getIntent().getParcelableExtra("course");
+		selectedCourse = getIntent().getParcelableExtra("course");
 	    
 		setContentView(R.layout.activity_course_detail);
 
@@ -81,9 +81,9 @@ public class CourseDetailActivity extends FragmentActivity implements
 			// using a fragment transaction.
 
 			Bundle arguments = new Bundle();
-            arguments.putParcelable("county", getIntent().getParcelableExtra("county"));
+            arguments.putParcelable("region", getIntent().getParcelableExtra("region"));
             arguments.putParcelable("course", getIntent().getParcelableExtra("course"));
-            arguments.putParcelableArrayList("courses",getIntent().getParcelableArrayListExtra("courses"));
+     //       arguments.putParcelableArrayList("courses",getIntent().getParcelableArrayListExtra("courses"));
 			CourseDetailFragment fragment = new CourseDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
@@ -94,11 +94,11 @@ public class CourseDetailActivity extends FragmentActivity implements
     final Button button = (Button) findViewById(R.id.play);
     button.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
-        	if (displayedCourse.holeList.size() != 0) {
+        	if (selectedCourse.holeList.size() != 0) {
 
 				// Start the hole activity for the displayed course.
 				Intent playIntent = new Intent(ctx, HoleActivity.class);
-				playIntent.putExtra("course", displayedCourse);
+				playIntent.putExtra("course", selectedCourse);
 				startActivity(playIntent);
 
                 // Tell wearable to create a notification that
@@ -106,7 +106,7 @@ public class CourseDetailActivity extends FragmentActivity implements
                 DataMap notifyWearable = new DataMap();
                 notifyWearable.putString("title", "Play Golf");
                 notifyWearable.putString("body", "Start now?");
-                notifyWearable.putString("course", displayedCourse.name);
+                notifyWearable.putString("course", selectedCourse.name);
                 notifyWearable.putLong("time", new Date().getTime());
 
                 // Send to data layer
@@ -135,7 +135,7 @@ public class CourseDetailActivity extends FragmentActivity implements
 		switch (item.getItemId()) {
 		case android.R.id.home:
 
-			Intent intent = new Intent(this, CountyListActivity.class);
+			Intent intent = new Intent(this, RegionListActivity.class);
 			intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			return(true);

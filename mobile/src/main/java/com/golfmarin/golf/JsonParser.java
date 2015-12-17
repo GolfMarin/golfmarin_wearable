@@ -6,10 +6,10 @@ import java.io.InputStream;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+//import org.apache.http.HttpResponse;
+//import org.apache.http.client.HttpClient;
+//import org.apache.http.client.methods.HttpGet;
+//import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +22,74 @@ import com.google.android.gms.maps.model.LatLng;
 
 import android.util.Log;
 
+public class JsonParser {
 
+	public JSONArray getJSONFromFile(Context ctx, String filename, String objects, String object)
+	{
+		// General parser that expects a file containing an objects/object hierarchy
+		InputStream input;
+		String jsonString = null;
+		JSONObject pluralJson = null;
+		JSONObject singularJson = null;
+		JSONArray singularJsonArray = null;
+		Log.v("mytag", "Started getJSONFromFile:" + filename);
+		// Read the file to a string
+		try {
+			input = ctx.getAssets().open(filename);
+			int size = input.available();
+			byte[] buffer = new byte[size];
+			input.read(buffer);
+			input.close();
+			jsonString = new String(buffer);
+		}
+		catch (Exception e) {
+			Log.i("mytag","Couldn't read json file " + e.toString());
+		}
+
+		// Extract JSONArray from string
+		try {
+			pluralJson = new JSONObject(jsonString);
+			singularJson = pluralJson.getJSONObject(objects);
+			singularJsonArray = singularJson.getJSONArray(object);
+		}
+		catch (JSONException e) {
+			Log.i("mytag","Couldn't parse JSON string." + e);
+		}
+		return singularJsonArray;
+	}
+
+	/*******************
+	*
+	* getRegionsFrom JSON
+	*
+	*********************/
+
+	public ArrayList<Region> getRegionsFromJSON(JSONArray regions) {
+
+		ArrayList<Region> regionsList = new ArrayList<Region>();
+
+
+		try{
+			for(int i=0; i<regions.length(); i++) {
+				JSONObject currentObject = regions.getJSONObject(i);
+				Region region = new Region(currentObject.getString("name"));
+				region.regionInfo = currentObject.getString("regionInfo");
+				region.latitude = currentObject.getDouble("latitude");
+				region.longitude = currentObject.getDouble("longitude");
+				region.id = currentObject.getString("id");
+				region.woeid = currentObject.getString("woeid");
+				region.thumbnailURL = currentObject.getString("thumbnailURL");
+
+				regionsList.add(region);
+				Log.i("mytag","Added region " + region + "latitude: " + region.latitude);
+			}
+		}
+		catch (JSONException e) {
+			Log.i("mytag","Couldn't parse JSON county object." + e);
+		}
+		return regionsList;
+	}
+/*
 public class JsonParser {
 	
 	public JSONArray getJSONFromFile(Context ctx, String filename, String objects, String object)
@@ -57,9 +124,14 @@ public class JsonParser {
 		catch (JSONException e) {
     		Log.i("mytag","Couldn't parse JSON string." + e);
 		}
-		return golfcourseJsonArray; 
+		return golfcourseJsonArray;
 	}
-	
+*/
+	/*******************
+	 *
+	 * getCountiesFrom JSON
+	 *
+	 *********************/
 		public ArrayList<County> getCountiesFromJSON(JSONArray counties) {
 		
 		ArrayList<County> countiesList = new ArrayList<County>();
@@ -86,7 +158,7 @@ public class JsonParser {
 		return countiesList;
 	}
 	
-	// Fetch golf courses
+	// Fetch golf courses from JSON asset files
 	
 	public ArrayList<Course> getCoursesFromJSON(JSONArray courses, String county) {
 		

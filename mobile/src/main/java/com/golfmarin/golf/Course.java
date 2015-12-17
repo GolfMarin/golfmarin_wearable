@@ -13,6 +13,7 @@ public class Course implements Parcelable, Comparable<Course> {
 	String	address = "None";
 	String	city = "None";
 	String	county = "None";
+    String region = "none";
 	String	courseInfo = "None";
 	String	directions = "None";
 	int   	holes;
@@ -26,11 +27,7 @@ public class Course implements Parcelable, Comparable<Course> {
 	String  slope = "None";
 	String  thumbnailURL = "sanmateo";
 	String  woeid = "None";
-	
-//	HoleArrayList holeList = new HoleArrayList();
-//	Hole[] holeArray = new Hole[36];
-
-	ArrayList<Hole> holeList = new ArrayList<Hole>();
+    ArrayList<Hole> holeList = new ArrayList<Hole>();
 
 	
 	Course(String name) {
@@ -52,6 +49,7 @@ public class Course implements Parcelable, Comparable<Course> {
         out.writeString(address);
         out.writeString(city);
         out.writeString(county);
+        out.writeString(region);
         out.writeDouble(latitude);
         out.writeDouble(longitude);
         out.writeString(phone);
@@ -80,14 +78,12 @@ public class Course implements Parcelable, Comparable<Course> {
         address = in.readString();
         city = in.readString();
         county = in.readString();
+        region = in.readString();
         latitude = in.readDouble();
         longitude = in.readDouble();
         phone = in.readString();
         holes = in.readInt();
         isPublic = in.readByte() ==1;
-        
-//        holeArray = (Hole[]) in.readParcelableArray(Hole.class.getClassLoader());
-//        holeList = in.readTypedList(list, c)
 
         in.readTypedList(holeList, Hole.CREATOR);
         

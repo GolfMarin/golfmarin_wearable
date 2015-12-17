@@ -73,7 +73,7 @@ public class CountyDetailFragment extends Fragment {
 			((TextView) rootView.findViewById(R.id.county_detail))
 					.setText(selectedCounty.name + " County \n\n");
 		}
-		
+		/*
         // Try to obtain a map reference from the layout, and add a marker.
 		// TODO: put this in its own fragment
 		        mMap = ((SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -93,7 +93,7 @@ public class CountyDetailFragment extends Fragment {
 		        	}
 		        	i++; 
 		        } 
-
+*/
 		return rootView; 
 	}
 }

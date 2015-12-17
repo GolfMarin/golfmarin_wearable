@@ -25,8 +25,8 @@ import android.content.ActivityNotFoundException;
 
 /**
  * A fragment representing a single County detail screen. This fragment is
- * either contained in a {@link CountyListActivity} in two-pane mode (on
- * tablets) or a {@link CountyDetailActivity} on handsets.
+ * either contained in a {@link RegionListActivity} in two-pane mode (on
+ * tablets) or a {@link CourseDetailActivity} on handsets.
  */
 public class CourseDetailFragment extends Fragment {
 	/**
@@ -35,7 +35,7 @@ public class CourseDetailFragment extends Fragment {
 	 */
 	public static final String ARG_ITEM_ID = "item_id";
 	
-	  private County selectedCounty;
+	  private Region selectedRegion;
 	  private Course selectedCourse;
 	  private ArrayList<Course> courses;
 	  
@@ -52,16 +52,16 @@ public class CourseDetailFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-        if(getArguments() != null && getArguments().containsKey("county") && getArguments().containsKey("courses")) {
+        if(getArguments() != null && getArguments().containsKey("course")) {
 		
   //      if (getArguments().containsKey("county")) {
-        	selectedCounty = getArguments().getParcelable("county");
+        	selectedRegion = getArguments().getParcelable("region");
             selectedCourse = getArguments().getParcelable("course");
-            courses = getArguments().getParcelableArrayList("courses");
+   //         courses = getArguments().getParcelableArrayList("courses");
             
-            Log.v("myApp", "Course detail, onCreate. Course:" + selectedCourse.name + "Holes: " + selectedCourse.holeList);
+
         }
-        
+        Log.v("myApp", "Course detail fragment, onCreate. Course: " + selectedCourse.name + ", Holes: " + selectedCourse.holeList);
 	}
 
 	@Override
@@ -103,27 +103,33 @@ public class CourseDetailFragment extends Fragment {
         // Try to obtain a map reference from the layout, and add a marker.
 		// TODO: put this in its own fragment
 		        mMap = ((SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-		        CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(selectedCounty.latitude,selectedCounty.longitude)).zoom(10).build();
+		        CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(selectedCourse.latitude,selectedCourse.longitude)).zoom(10).build();
 		        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition)); 
 		        
 		        // Add markers for all the golfcourses
 		        mMap.clear();
+
+			courses = selectedRegion.courses;
+            Log.v("myApp", "CountyDetailFragment, selectedRegion: " + selectedRegion.name);
+            Log.v("myApp", "CountyDetailFragment, courses[1]: " + selectedRegion.courses.get(1).name);
 		        int i=0;
 		        Course c;
 		        while (i < courses.size()) {
 		        	c = courses.get(i);
-		    		// Log.v("myApp", "CountyDetailFragment, course.county: " + c.county);
-		        	if (c.county.equalsIgnoreCase(selectedCounty.name)) {
+		        	 Log.v("myApp", "CountyDetailFragment, course.name: " + c.name);
+		   //     	if (c.region.name.equalsIgnoreCase(selectedRegion.name)) {
 		        		if (c.name.equalsIgnoreCase(selectedCourse.name)) {
 				            mMap.addMarker(new MarkerOptions().position(new LatLng(c.latitude, c.longitude)).title(c.name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))).showInfoWindow();
+                            Log.v("myTag", "Position map at: " + c.name);
 					        cameraPosition = new CameraPosition.Builder().target(new LatLng(selectedCourse.latitude,selectedCourse.longitude)).zoom(10).build();
 					        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 		        		}
 		        		else {
 			            mMap.addMarker(new MarkerOptions().position(new LatLng(c.latitude, c.longitude)).title(c.name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                            Log.v("myTag", "Position marker at: " + c.name);
 		        		}
-			        //	Log.v("myApp", "CountyDetailFragment,Course: " + c.name + " latitude: " + c.latitude + " longitude: " + c.longitude);
-		        	}
+			        	Log.v("myApp", "CountyDetailFragment,Course: " + c.name + " latitude: " + c.latitude + " longitude: " + c.longitude);
+		   //     	}
 		        	i++; 
 		        } 
 		}

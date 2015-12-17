@@ -12,7 +12,7 @@ import java.net.URLConnection;
 //import android.util.Log;
 public class Weather {
 	
-	private CountyListActivity countyListActivity = null;
+	private RegionListActivity regionListActivity = null;
     private SAXParser saxParser = null;
     private URL weatherRSS = null;
     private URLConnection weatherConnection = null;
@@ -23,8 +23,8 @@ public class Weather {
     private String description = null;
 
     // Constructor
-    public Weather(CountyListActivity activity) {
-    	countyListActivity = activity;
+    public Weather(RegionListActivity activity) {
+    	regionListActivity = activity;
         try {
             // Create a SAX parser factory
             SAXParserFactory factory = SAXParserFactory.newInstance(); 
@@ -39,10 +39,10 @@ public class Weather {
     
     
     // Method to start the weather rss
-    public void getWeather (County county) {
+    public void getWeather (Region region) {
         // XML Stream
     	try {
-        weatherRSS = new URL("http://weather.yahooapis.com/forecastrss?w=" + county.woeid);
+        weatherRSS = new URL("http://weather.yahooapis.com/forecastrss?w=" + region.woeid);
         weatherConnection = weatherRSS.openConnection();
         xmlStream = weatherConnection.getInputStream();
                 
@@ -94,7 +94,7 @@ public class Weather {
                     	
 	                //    Log.v("myApp", "title and description: " + title + " " + description);
 	                    localWeather = title + description;
-	                    countyListActivity.onLocalWeatherReady(localWeather);
+	                    regionListActivity.onLocalWeatherReady(localWeather);
                     }
                     else {
                     	currentElement = "";

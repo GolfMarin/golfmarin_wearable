@@ -40,7 +40,7 @@
         <uses-library android:name="com.google.android.maps"/>
         
         <activity
-            android:name="com.golfmarin.golf.CountyListActivity"
+            android:name="com.golfmarin.golf.RegionListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -9,7 +9,7 @@
     
     <string name="title_county_list">Golf Near San Francisco</string>
     <string name="county_list">County</string>
-    <string name="course_list">Golf Course</string>
+    <string name="region_list">Golf Region</string>
     <string name="detail">Details</string>
     <string name="hole_legend">Hole</string>
     <string name="hole_minus">-</string>

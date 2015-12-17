@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentActivity;
 import java.util.ArrayList;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -50,19 +51,17 @@ public class CountyListActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-        .detectDiskReads()
-        .detectDiskWrites()
-        .detectNetwork()
-        .penaltyLog()
-        .build());
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()
+                .penaltyLog()
+                .build());
 		super.onCreate(savedInstanceState);
 		
 
 		DataModel dm = new DataModel(this);
 		counties = dm.getCounties();
 		courses = dm.getCourses();
-
-		
 		
 		setContentView(R.layout.activity_county_list);
 		this.setTitle(R.string.title_county_list);
@@ -96,12 +95,13 @@ public class CountyListActivity extends FragmentActivity implements
         	else {
         		//Log.v("myApp", "List Activity, Use existing Detail Fragment " + df);	
         	}
-            
+            /*
             // Work on the web view
              webViewFragment = (WebViewFragment) fm.findFragmentById(R.id.web);
              webView = webViewFragment.getWebView();            
              if (parser == null) parser = new Weather(this);
-             parser.getWeather(counties.get(0));             
+             parser.getWeather(counties.get(0));
+             */
 		}
          // Initialize the county list fragment            
         	CountyListFragment cf = (CountyListFragment) fm.findFragmentByTag("List");
@@ -136,7 +136,7 @@ public class CountyListActivity extends FragmentActivity implements
 			
 			// Change the header bar
 			TextView header = (TextView) findViewById(R.id.county_list_header);
-			header.setText(R.string.course_list);
+			header.setText(R.string.region_list);
 			
 			// Replace county list fragment with course list fragment
 			// for the selected county
@@ -187,7 +187,8 @@ public class CountyListActivity extends FragmentActivity implements
 			((CountyListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.county_list)).setActivateOnItemClick(true);
 			
-            parser.getWeather(county);
+//  Just disable things that don't matter after going to regions
+//            parser.getWeather(county);
 
 		} else {
 			// In single-pane mode, simply start the course list activity

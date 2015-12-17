@@ -55,9 +55,9 @@ import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 import java.util.ArrayList;
-import static android.util.FloatMath.cos;
-import static android.util.FloatMath.sin;
-import static android.util.FloatMath.sqrt;
+//import static android.util.FloatMath.cos;
+//import static android.util.FloatMath.sin;
+//import static android.util.FloatMath.sqrt;
 
 /*
   This activity initializes with the closest course
@@ -564,14 +564,14 @@ public class HoleActivity extends Activity implements
             float axisZ = event.values[2];
 
             // Calculate the angular speed of the sample
-            float omegaMagnitude = sqrt(axisX * axisX + axisY * axisY + axisZ * axisZ);
+            // float omegaMagnitude = sqrt(axisX * axisX + axisY * axisY + axisZ * axisZ);
 
             // Normalize the rotation vector if it's big enough to get the axis
             // (that is, EPSILON should represent your maximum allowable margin of error)
             //   if (omegaMagnitude > EPSILON) {
-            axisX /= omegaMagnitude;
-            axisY /= omegaMagnitude;
-            axisZ /= omegaMagnitude;
+            // axisX /= omegaMagnitude;
+            // axisY /= omegaMagnitude;
+            // axisZ /= omegaMagnitude;
 
             //   }
             if ((axisZ < .7) ) {

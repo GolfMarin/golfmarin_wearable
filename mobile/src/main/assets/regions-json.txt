@@ -1,0 +1,41 @@
+{ "regions": {
+    "region": [
+        {
+            "name": "Wine Country",
+            "id": "1",
+            "regionInfo": "Wine Country",
+            "latitude": "38.404",
+            "longitude": "-122.412",
+            "thumbnailURL": "napa",
+            "woeid": "2456984"
+        },
+        {
+            "name": "San Francisco",
+            "id": "2",
+            "regionInfo": "Golden Gate",
+            "latitude": "37.760",
+            "longitude": "-122.447",
+            "thumbnailURL": "sanfrancisco",
+            "woeid": "2487956"
+        },
+                {
+            "name": "Silicon Valley",
+            "id": "3",
+            "regionInfo": "Bay Area Peninsula",
+            "latitude": "37.534",
+            "longitude": "-122.393",
+            "thumbnailURL": "ic",
+            "woeid": "2488142"
+        },
+        {
+            "name": "East Bay",
+            "id": "4",
+            "regionInfo": "Land of Oaks",
+            "latitude": "37.988857",
+            "longitude": "-122.053642",
+            "thumbnailURL": "sanmateo",
+            "woeid": "2384020"
+        }
+    ]
+    }
+}

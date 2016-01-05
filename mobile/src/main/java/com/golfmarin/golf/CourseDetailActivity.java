@@ -94,6 +94,7 @@ public class CourseDetailActivity extends FragmentActivity implements
     final Button button = (Button) findViewById(R.id.play);
     button.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
+            Log.v("TAG", "Play button pressed, course: " + selectedCourse.name);
         	if (selectedCourse.holeList.size() != 0) {
 
 				// Start the hole activity for the displayed course.

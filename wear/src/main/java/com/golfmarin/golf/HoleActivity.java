@@ -2,10 +2,9 @@ package com.golfmarin.golf;
 
 /*
         Copyright (C) 2015  Michael Hahn
-
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
-        the Free Software Foundation, either version 3 of the License, or
+        Free Software Foundation, either version 3 of the License, or
         (at your option) any later version.
 
         This program is distributed in the hope that it will be useful,
@@ -18,6 +17,7 @@ package com.golfmarin.golf;
 */
 
 import android.app.Activity;
+import android.support.wearable.activity.WearableActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -41,6 +41,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -57,18 +58,17 @@ import com.google.android.gms.wearable.Wearable;
 import java.util.ArrayList;
 //import static android.util.FloatMath.cos;
 //import static android.util.FloatMath.sin;
-//import static android.util.FloatMath.sqrt;
+//import static android.util.FloatMath.sqrt;connectionResult
 
 /*
   This activity initializes with the closest course
   then displays distances from current location to the hole placements.
 */
 
-public class HoleActivity extends Activity implements
+public class HoleActivity extends WearableActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener,
-        SensorEventListener {
+        LocationListener{
 
     private static final String TAG = "WearHoleActivity";
     // Wearable data layer constants
@@ -88,6 +88,7 @@ public class HoleActivity extends Activity implements
     private TextView backView;
     private TextView middleView;
     private TextView frontView;
+    private ProgressBar progressView;
 
     private DismissOverlayView dismissOverlayView;
 
@@ -99,12 +100,14 @@ public class HoleActivity extends Activity implements
 
     // Sensor globals
     private boolean mIsInResolution;
+    /*
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
 
     // Constant to convert nanoseconds to seconds.
     private static final float NS2S = 1.0f / 1000000000.0f;
     private final float[] deltaRotationVector = new float[4];
+    */
 
     private float timestamp;
 
@@ -137,29 +140,39 @@ public class HoleActivity extends Activity implements
                 backView = (TextView) stub.findViewById(R.id.back);
                 middleView = (TextView) stub.findViewById(R.id.middle);
                 frontView = (TextView) stub.findViewById(R.id.front);
+                progressView = (ProgressBar) stub.findViewById(R.id.progress_bar);
 
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             }
         });
+
+        // Set startup state, which triggers a new search for the closest course.
+        startup = true;
+
+        // Enable the ambient mode
+        setAmbientEnabled();
 
         // Initialize data model containing all golf courses
         DataModel dm = new DataModel(this);
         allCourses = dm.getCourses();
 
-        // Check for an extra that specifies the golf course
-        // If present, initialize currentCourse and disable out course selection
+        // Check for an extra that specifies the golf course name
+        // If present, initialize currentCourse object and disable course selection
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String courseName = extras.getString("course");
-
+            // Find the course object and verify that it has holes
             for (Course course : allCourses) {
-                if (course.name.equals(courseName)) {
+                if (course.name.equals(courseName) && (course.holeList.size() >0)) {
                     currentCourse = course;
-                    startup = false;
                     allHoles = currentCourse.holeList;
                     currentHoleNum = 1;
                     currentHole = allHoles.get(0);
-                    Log.i(TAG, "Set currentCourse: " + currentCourse.name);
+                    Log.i(TAG, "Set currentCourse using a notification extra: " + currentCourse.name);
+                    Log.i(TAG, "ProgressView: " + progressView);
+                //    progressView.setVisibility(View.GONE);
+                //    holeView.setText("Hole");
+                    startup = false;
                     break;
                 }
             }
@@ -176,12 +189,12 @@ public class HoleActivity extends Activity implements
         dismissOverlayView = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
         dismissOverlayView.setIntroText(R.string.dismiss_intro);
         dismissOverlayView.showIntroIfNecessary();
-
+/*
         // Set up sensor listener
-        senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        senSensorM*anager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-
+*/
         // Turn off auto brightness
         Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
     }
@@ -206,6 +219,7 @@ public class HoleActivity extends Activity implements
         }
         // Connect the Google API client when the Activity becomes visible
         googleClient.connect();
+
     }
 
     // Disconnect from Google Play Services when the Activity is no longer visible
@@ -223,7 +237,7 @@ public class HoleActivity extends Activity implements
     protected void onPause() {
         // Unregister listeners
         LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
-        senSensorManager.unregisterListener(this);
+     //   senSensorManager.unregisterListener(this);
         super.onPause();
     }
 
@@ -234,7 +248,7 @@ public class HoleActivity extends Activity implements
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, messageFilter);
 
         // Register the sensor manager
-        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_UI);
+     //   senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     /**
@@ -267,6 +281,10 @@ public class HoleActivity extends Activity implements
 
         // Register listener using the LocationRequest object
         LocationServices.FusedLocationApi.requestLocationUpdates(googleClient, locationRequest, this);
+
+        // Get the current location and try to invoke the golf course setup procedure
+        onLocationChanged(LocationServices.FusedLocationApi.getLastLocation(googleClient));
+
     }
 
     @Override
@@ -329,22 +347,31 @@ public class HoleActivity extends Activity implements
 
     @Override
     public void onLocationChanged(Location location) {
-        // Find closest course, if just starting up and location is valid
-        if (((startup == true) && location != null)) {
-            currentCourse = (getCurrentCourse(location)).get(0);
-            Log.i(TAG, "Current course: " + currentCourse.name);
-            if (currentCourse == null) return;
-            else {
-                startup = false;
-                allHoles = currentCourse.holeList;
-                currentHoleNum = 1;
-                currentHole = allHoles.get(0);
+
+        Log.i(TAG, "Current location accuracy: " +location.getAccuracy());
+
+        // Wait for a usable location
+        if ((location != null) &&
+                (location.getAccuracy() < 25.0) &&
+                (location.getAccuracy() > 0.0)) {
+            // Find closest course, if just starting up
+            if (startup) {
+                if (getCurrentCourse(location).size() > 0) {
+                    currentCourse = (getCurrentCourse(location)).get(0);
+                    startup = false;
+                    Log.i(TAG, "Current course: " + currentCourse.name);
+
+                    allHoles = currentCourse.holeList;
+                    currentHoleNum = 1;
+                    currentHole = allHoles.get(0);
+                //    progressView.setVisibility(View.GONE);
+                //    holeView.setText("Hole");
+                }
             }
         }
-        // Refresh the distances to hole placements
-        if ((location != null) && (location.getAccuracy() < 25.0) && (location.getAccuracy() > 0.0)) {
-            updateDisplay(location);
-        }
+        // Refresh the distances to hole placements§
+        if (!startup) updateDisplay(location);
+
     }
 
     // Local broadcast receiver callback to receive messages
@@ -357,8 +384,7 @@ public class HoleActivity extends Activity implements
             String path = intent.getStringExtra("path");
             String message = intent.getStringExtra("message");
 
-
-            if (path.equals(WEARABLE_MESSAGE_HOLE_PATH)) {
+            if (path.equals(WEARABLE_MESSAGE_HOLE_PATH) && !startup) {
                 // The user swiped the wearable left or right
                 // The message is the resultant hole number
 
@@ -414,7 +440,7 @@ public class HoleActivity extends Activity implements
         public boolean onFling(MotionEvent event1, MotionEvent event2,
                                float velocityX, float velocityY) {
 
-
+        if(!startup){
             if (event1.getX() < event2.getX()) {
                 // Swipe left (minus)
                 if (currentHoleNum > 1) {
@@ -430,8 +456,9 @@ public class HoleActivity extends Activity implements
             }
             updateDisplay(LocationServices.FusedLocationApi.getLastLocation(googleClient));
 
-            // Send hole number to data later
+            // Send hole number to data layer
             new SendToDataLayerThread(WEARABLE_MESSAGE_HOLE_PATH,currentHoleNum.toString()).start();
+        }
             return true;
         }
     }
@@ -461,6 +488,65 @@ public class HoleActivity extends Activity implements
             }
         }
     }
+    /******************************
+     * Ambient mode callbacks
+     * This replaces the earlier motion detection
+     *******************************/
+
+    @Override
+    public void onEnterAmbient(Bundle ambientDetails) {
+        super.onEnterAmbient(ambientDetails);
+        Log.v(TAG,"Entered Ambient.");
+         /*
+         WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
+         try {
+             wallpaperManager.setResource(R.raw.green_outline);
+             Log.v(TAG,"Wallpaper set.");
+         }
+         catch (IOException e) {
+             Log.v(TAG, "Wallpaper manger failed");
+         }
+         */
+        // Disable antialias for devices with low-bit ambient
+        holeView.getPaint().setAntiAlias(false);
+        frontView.getPaint().setAntiAlias(false);
+        middleView.getPaint().setAntiAlias(false);
+        backView.getPaint().setAntiAlias(false);
+    }
+
+    @Override
+    public void onExitAmbient() {
+        Log.v(TAG, "ExitedAmbient");
+        // Restore display
+        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
+        stub.invalidate();
+/*
+          WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
+          try {
+              wallpaperManager.setResource(R.raw.greenback);
+              Log.v(TAG,"Wallpaper set.");
+          }
+          catch (IOException e) {
+              Log.v(TAG, "Wallpaper manger failed");
+          }
+
+*/
+        // Renable antialias for normal display
+        holeView.getPaint().setAntiAlias(true);
+        frontView.getPaint().setAntiAlias(true);
+        middleView.getPaint().setAntiAlias(true);
+        backView.getPaint().setAntiAlias(true);
+
+        super.onExitAmbient();
+    }
+
+    @Override
+    public void onUpdateAmbient() {
+        // Update hole distances using current location
+        Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleClient);
+        Log.v(TAG, "Distances updating using" + currentLocation.toString());
+        updateDisplay(currentLocation);
+    }
 
     /*****************************
      * Course and hole methods
@@ -483,7 +569,6 @@ public class HoleActivity extends Activity implements
         for (Course course : allCourses) {
 
             // Not all courses have hole locations, skip those
-
             if (course.holeList != null) {
                 float yards = location.distanceTo(course.getLocation()) * conv;
                 if (yards < bestYards) {
@@ -505,9 +590,9 @@ public class HoleActivity extends Activity implements
                 bestCourses.add(course);
             }
 */
+    //Verify that a course with holes was identified.
         }
-
-        startup = false;
+        if(bestCourses.size() >0 ) startup =false;
         return bestCourses;
     }
 
@@ -520,22 +605,29 @@ public class HoleActivity extends Activity implements
     private void updateDisplay(Location location) {
         // float accuracy;
         // accuracy = location.getAccuracy();
+        // Only use whe there is a current hole defined.
+        if (currentHole != null) {
 
-        float conv = (float) 1.0936133;
-        float yards = location.distanceTo(currentHole.getLocation("front")) * conv;
-        String front = String.valueOf((int) yards);
-        frontView.setText(front);
+            float conv = (float) 1.0936133;
+            float yards = location.distanceTo(currentHole.getLocation("front")) * conv;
+            String front = String.valueOf((int) yards);
+            frontView.setText(front);
 
-        yards = location.distanceTo(currentHole.getLocation("middle")) * conv;
-        String middle = String.valueOf((int) yards);
-        middleView.setText(middle);
+            yards = location.distanceTo(currentHole.getLocation("middle")) * conv;
+            String middle = String.valueOf((int) yards);
+            middleView.setText(middle);
 
-        yards = location.distanceTo(currentHole.getLocation("back")) * conv;
-        String back = String.valueOf((int) yards);
-        backView.setText(back);
+            yards = location.distanceTo(currentHole.getLocation("back")) * conv;
+            String back = String.valueOf((int) yards);
+            backView.setText(back);
 
-        // Keep the hole number display current
-        holeView.setText("Hole " + currentHole.holeNum);
+            // Keep the hole number display current
+            String holeViewText = ("Hole " + currentHole.holeNum);
+            holeView.setText(holeViewText);
+
+            // Make sure startup elements are normal
+            progressView.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -544,7 +636,7 @@ public class HoleActivity extends Activity implements
      */
 
     private Handler displayHandler = new Handler();
-
+/*
     @Override
     public final void onAccuracyChanged(Sensor sensor, int accuracy) {
         // Do something here if sensor accuracy changes.
@@ -593,6 +685,7 @@ public class HoleActivity extends Activity implements
         }
         timestamp = event.timestamp;
     }
+*/
 
     // Dim the display after a timeout
     // Set flag that requires wrist rotation to restore brightness

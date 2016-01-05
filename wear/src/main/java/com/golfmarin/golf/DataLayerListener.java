@@ -23,7 +23,6 @@ import com.google.android.gms.wearable.WearableListenerService;
  */
 public class DataLayerListener extends WearableListenerService {
 
-
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
 
